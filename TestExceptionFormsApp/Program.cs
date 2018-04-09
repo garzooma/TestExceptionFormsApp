@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,5 +29,28 @@ namespace TestExceptionFormsApp
     {
       MessageBox.Show(String.Format("Exception: {0}", e.Exception));
     }
-  }
+
+        public static bool IsMainThread()
+        {
+            bool ret = false;
+            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA &&
+                !Thread.CurrentThread.IsBackground && !Thread.CurrentThread.IsThreadPoolThread && Thread.CurrentThread.IsAlive)
+            {
+                MethodInfo correctEntryMethod = Assembly.GetEntryAssembly().EntryPoint;
+                StackTrace trace = new StackTrace();
+                StackFrame[] frames = trace.GetFrames();
+                for (int i = frames.Length - 1; i >= 0; i--)
+                {
+                    MethodBase method = frames[i].GetMethod();
+                    if (correctEntryMethod == method)
+                    {
+                        ret = true;
+                        break;
+                    }
+                }
+            }
+
+            return ret;
+        }
+    }
 }
