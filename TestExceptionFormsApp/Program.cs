@@ -20,12 +20,20 @@ namespace TestExceptionFormsApp
       Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
       Application.ThreadException += GUIErrorHandler;
 
-      Application.EnableVisualStyles();
+      AppDomain.CurrentDomain.UnhandledException +=
+              new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+            Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.Run(new Form1());
     }
 
-    private static void GUIErrorHandler(object sender, ThreadExceptionEventArgs e)
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(String.Format("AppDomain Exception: {0}", e.ExceptionObject.ToString()));
+        }
+
+        private static void GUIErrorHandler(object sender, ThreadExceptionEventArgs e)
     {
       MessageBox.Show(String.Format("Exception: {0}", e.Exception));
     }
