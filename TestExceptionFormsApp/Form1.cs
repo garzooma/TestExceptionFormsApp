@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,25 @@ namespace TestExceptionFormsApp
 {
   public partial class Form1 : Form {
     public Form1() {
-      InitializeComponent();
+        InitializeComponent();
+
+        Messenger.Default.Register<MessageCommunicator>(this, OnMessageReceived);
+
+            wpfUserControl1.ExceptionEvent += WpfUserControl1_ExceptionEvent;
+
+    }
+
+        private void WpfUserControl1_ExceptionEvent(Exception excp)
+        {
+            //throw new Exception("Exception from wpf uc");
+        }
+
+        private void OnMessageReceived(MessageCommunicator msgComm)
+    {
+        if (msgComm.Message == "Throw")
+        {
+            throw new Exception("Exception from message");
+        }
     }
 
     private void button1_Click(object sender, EventArgs e) {
@@ -161,5 +180,10 @@ namespace TestExceptionFormsApp
         {
             throw new NotImplementedException();
         }
+    }
+
+  public class MessageCommunicator
+    {
+        public string Message { get; set; }
     }
 }

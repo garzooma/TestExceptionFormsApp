@@ -31,6 +31,7 @@ namespace TestExceptionFormsApp
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             MessageBox.Show(String.Format("AppDomain Exception: {0}", e.ExceptionObject.ToString()));
+
         }
 
         private static void GUIErrorHandler(object sender, ThreadExceptionEventArgs e)

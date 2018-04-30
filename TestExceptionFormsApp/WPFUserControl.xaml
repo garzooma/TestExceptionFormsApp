@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="TestExceptionFormsApp.WPFUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestExceptionFormsApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="UserControl_Loaded">
+    <Grid>
+        <StackPanel HorizontalAlignment="Stretch" Height="100" VerticalAlignment="Top">
+            <CheckBox Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">Handled</CheckBox>
+            <Button Click="Button_Click">Unhandled Exception</Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
